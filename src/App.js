@@ -1,10 +1,15 @@
-
-
+import { BrowserRouter,Routes,Route} from "react-router-dom"
+import {SingIn,SingUp,Main} from "./views";
+import "./stylesheet/style.css";
 function App() {
-  return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/login" element={<SingIn/>}/>
+                <Route path="/register" element={<SingUp/>}/>
+                <Route index element={<Main/>}/>
+            </Routes>
+        </BrowserRouter>
+    )
 }
 export default App;
