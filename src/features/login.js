@@ -77,7 +77,7 @@ const Form = () => {
                     <a href="#">忘記密碼</a>
                 </div>
             </div>
-            <div id="err_msg"><pre>{err}</pre></div>
+            <div className="text-red-400" id="err_msg"><pre>{err}</pre></div>
         </form>
     );
 }
