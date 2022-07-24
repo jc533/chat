@@ -1,5 +1,5 @@
 import { BrowserRouter,Routes,Route} from "react-router-dom"
-import {SingIn,SingUp,Main} from "./views";
+import {SingIn,SingUp,Main} from "./features";
 import "./stylesheet/style.css";
 function App() {
     return (
