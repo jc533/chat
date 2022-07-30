@@ -6,3 +6,4 @@ hope this could be the last version and this time I can finish the project.
 - [ ] UI
 - [ ] socket API
 - [ ] redux logic
+- [ ] settings
