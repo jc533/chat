@@ -12,7 +12,7 @@ const Navbar = ({infobarToggle,sidebarToggle}) => {
 
             <div>
                 <button className="mdi mdi-phone btn-actionbar mr-5"></button>
-                <button id="infobar-btn" className="mdi mdi-information btn-actionbar text-blue-500" onclick={infobarToggle}></button>
+                <button id="infobar-btn" className="mdi mdi-information btn-actionbar text-blue-500" onClick={infobarToggle}></button>
             </div>
         </nav>
     );

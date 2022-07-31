@@ -1,8 +1,9 @@
 import { useState } from "react";
-const Infobar = () => {
+const Infobar = ({active}) => {
     const [action, setAction] = useState("none");
     return (
-        <div id="infobar" className="custom-scroll-bar" style={{ "height": "calc(100vh - 62px)" }}>
+        <div id="infobar" className={`custom-scroll-bar ${active?"infobar-hide":""}`} 
+        style={{ "height": "calc(100vh - 62px)" }}>
             <Default action={action} setAction={setAction} />
             <Search action={action} setAction={setAction} />
             <Leave action={action} setAction={setAction} />

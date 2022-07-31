@@ -8,12 +8,12 @@ const Header = ({ sidebarActive, sidebarToggle }) => {
             </div>
             <div class="flex items-center justify-between w-full">
                 <h1 class="text-gray-900 text-2xl font-bold">聊天室</h1>
-                <DropdownMenu/>
+                <AccountMenu/>
             </div>
         </div>
     )
 }
-const DropdownMenu = () => {
+const AccountMenu = () => {
     const [isOpen,setOpen] = useState(false);
     const toggle = ()=>setOpen(!isOpen);
     return (

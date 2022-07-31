@@ -4,6 +4,7 @@ const ws = io("http://localhost:8080",{
     transports: ['websocket']
 });
 
-// const receiveMsg = async() => {
+// const receiveMsg = ws.on(async() => {
 //     await ws.emit("");
-// }
+// })
+
