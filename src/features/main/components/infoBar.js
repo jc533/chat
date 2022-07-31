@@ -1,60 +1,147 @@
+import { useState } from "react";
 const InfoBar = () => {
+    const [action, setAction] = useState("none");
     return (
-        <div id="infobar" class="custom-scroll-bar" style={{ "height": "calc(100vh - 62px)" }}>
-            <Default/>
+        <div id="infobar" className="custom-scroll-bar" style={{ "height": "calc(100vh - 62px)" }}>
+            <Default action={action} setAction={setAction} />
+            <Search action={action} setAction={setAction} />
+            <Leave action={action} setAction={setAction} />
+            <AddFriend action={action} setAction={setAction} />
         </div>
     );
 }
-const Default = () => {
+const Default = ({ action, setAction }) => {
     return (
-        <div class="absolute w-full">
-            <div class="text-center p-3">
-                <span class="mdi mdi-account-group-outline text-blue-500 text-5xl"></span>
-                <h4 class="text-gray-900 text-xl">群組</h4>
+        <div hidden={action !== "none"} className="absolute w-full">
+            <div className="text-center p-3">
+                <span className="mdi mdi-account-group-outline text-blue-500 text-5xl"></span>
+                <h4 className="text-gray-900 text-xl">群組</h4>
             </div>
 
-            <hr class="border-gray-300" />
+            <hr className="border-gray-300" />
 
-            <div class="p-2">
-                <button class="list-item" onclick="action='search'">
+            <div className="p-2">
+                <button className="list-item" onClick={() => setAction("search")}>
                     <h4>搜尋對話</h4>
-                    <span class="mdi mdi-magnify text-gray-600 text-xl"></span>
+                    <span className="mdi mdi-magnify text-gray-600 text-xl"></span>
                 </button>
-                <button class="list-item">
-                    <div class="text-left">
+                <button className="list-item">
+                    <div className="text-left">
                         <h4>通知</h4>
-                        <p class="text-sm text-gray-600">靜音</p>
+                        <p className="text-sm text-gray-600">靜音</p>
                     </div>
-                    <span class="mdi mdi-bell-off-outline text-gray-600 text-xl"></span>
+                    <span className="mdi mdi-bell-off-outline text-gray-600 text-xl"></span>
                 </button>
-                <button class="list-item">
-                    <div class="text-left">
+                <button className="list-item">
+                    <div className="text-left">
                         <h4>照片、影片</h4>
                     </div>
-                    <span class="mdi mdi-image-multiple text-gray-600 text-xl"></span>
+                    <span className="mdi mdi-image-multiple text-gray-600 text-xl"></span>
                 </button>
-                <button class="list-item" onclick="action='leave'">
-                    <div class="text-left">
+                <button className="list-item" onClick={() => setAction("leave")}>
+                    <div className="text-left">
                         <h4>退出群組</h4>
                     </div>
-                    <span class="mdi mdi-logout text-red-500 text-xl"></span>
+                    <span className="mdi mdi-logout text-red-500 text-xl"></span>
                 </button>
             </div>
 
-            <hr class="border-gray-300" />
+            <hr className="border-gray-300" />
 
-            <div class="p-2">
-                <h4 class="text-gray-600 pl-2 text-sm mb-2">成員</h4>
-                <button class="list-item justify-start" onclick="action='addFriend'">
-                    <span class="mdi mdi-account-plus text-blue-500 text-xl"></span>
-                    <p class="ml-4">新增成員</p>
+            <div className="p-2">
+                <h4 className="text-gray-600 pl-2 text-sm mb-2">成員</h4>
+                <button className="list-item justify-start" onClick={() => setAction("addFriend")}>
+                    <span className="mdi mdi-account-plus text-blue-500 text-xl"></span>
+                    <p className="ml-4">新增成員</p>
                 </button>
-                <div class="list-item justify-start">
-                    <span class="mdi mdi-account text-gray-600 text-xl"></span>
-                    <p class="ml-4">朋友</p>
+                <div className="list-item justify-start">
+                    <span className="mdi mdi-account text-gray-600 text-xl"></span>
+                    <p className="ml-4">朋友</p>
                 </div>
             </div>
         </div>
     );
+}
+const Search = ({ action, setAction }) => {
+    //click away
+    const onSearch = (e) => {
+        e.preventDefault();
+    }
+    return (
+        <div hidden={action !== "search"} onclick="action='none'" className="w-full absolute">
+            <div className="p-3">
+                <div className="flex items-center">
+                    <button className="mdi mdi-arrow-left btn-actionbar" onClick={() => setAction("none")}></button>
+                    <p className="ml-4 text-gray-900 text-lg">搜尋</p>
+                </div>
+
+                <form action="" onSubmit={onSearch} className="mt-4">
+                    <input type="text" className="custom-input w-full" />
+
+                    <div className="mt-4 grid grid-cols-2 gap-4">
+                        <button className="btn btn-secondary" type="reset" onClick={() => setAction("none")}>
+                            取消
+                        </button>
+                        <button type="submit" className="btn btn-primary">搜尋</button>
+                    </div>
+                </form>
+            </div>
+        </div >
+    )
+}
+const Leave = ({ action, setAction }) => {
+    return (
+        <div hidden={action !== "leave"} onClick={() => setAction("none")} className="w-full absolute">
+            <div className="p-3">
+                <div className="flex items-center">
+                    <button className="mdi mdi-arrow-left btn-actionbar" onClick={() => setAction("none")}></button>
+                    <p className="ml-4 text-gray-900 text-lg">退出群組</p>
+                </div>
+
+                <p className="text-gray-600 my-5">
+                    你確定要退出？
+                </p>
+
+                <div className="mt-4 grid grid-cols-2 gap-4">
+                    <button className="btn btn-secondary" type="reset"
+                        onClick={() => setAction("none")}>取消</button>
+                    <button type="submit" className="btn btn-danger">退出</button>
+                </div>
+
+            </div >
+        </div >
+    );
+}
+const AddFriend = ({ action, setAction }) => {
+    const addFriend = (e) => {
+        e.preventDefault();
+    }
+    return (
+        <div hidden={action !== "addFriend"} onClick={() => setAction("none")} className="w-full absolute">
+            <div className="p-3">
+                <div className="flex items-center">
+                    <button className="mdi mdi-arrow-left btn-actionbar" onClick={() => setAction("none")}></button>
+                    <p className="ml-4 text-gray-900 text-lg">新增成員</p>
+                </div>
+
+                <form className="my-2" onSubmit={addFriend}>
+                    <label className="list-item custom-checkbox">
+                        <div className="flex items-center">
+                            <span className="mdi mdi-account text-xl text-gray-600 mr-4"></span>
+                            <p className="text-gray-900">朋友</p>
+                        </div>
+                        <input type="checkbox" name="" id="" />
+                        <span className="custom-checkbox-icon"></span>
+                    </label>
+
+                    <div className="mt-4 grid grid-cols-2 gap-4">
+                        <button className="btn btn-secondary" type="reset"
+                            onClick={() => setAction("none")}>取消</button>
+                        <button type="submit" className="btn btn-primary">新增</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    )
 }
 export default InfoBar;
