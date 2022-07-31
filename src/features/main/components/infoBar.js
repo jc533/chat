@@ -1,5 +1,5 @@
 import { useState } from "react";
-const InfoBar = () => {
+const Infobar = () => {
     const [action, setAction] = useState("none");
     return (
         <div id="infobar" className="custom-scroll-bar" style={{ "height": "calc(100vh - 62px)" }}>
@@ -144,4 +144,4 @@ const AddFriend = ({ action, setAction }) => {
         </div>
     )
 }
-export default InfoBar;
+export default Infobar;
