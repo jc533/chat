@@ -1,9 +1,9 @@
 import { useState } from "react"
-const Header = ({ sidebarActive, sidebarToggle }) => {
+const Header = ({sidebarToggle }) => {
     return (
         <div class="sticky bg-white md:bg-gray-200 p-4">
             <div class="mb-5 block md:hidden">
-                <button onclick={sidebarToggle}
+                <button onClick={sidebarToggle}
                     class="btn-actionbar mdi mdi-close text-2xl mr-3 inline md:hidden"></button>
             </div>
             <div class="flex items-center justify-between w-full">
