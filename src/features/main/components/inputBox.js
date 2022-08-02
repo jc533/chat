@@ -7,9 +7,9 @@ const InputBox = () => {
     }
     return (
         <form action="" className="flex" onSubmit={sendMsg}>
-            <button onclick=""
+            <button
                 className="focus:outline-none bg-transparent border-0 text-gray-600 hover:text-gray-700 text-2xl mdi mdi-sticker-emoji px-2"></button>
-            <button onclick=""
+            <button
                 className="focus:outline-none bg-transparent border-0 text-gray-600 hover:text-gray-700 text-2xl mdi mdi-image px-2"></button>
             <input
                 value={text}

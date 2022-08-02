@@ -3,7 +3,7 @@ const socket = io("http://localhost:8080",{
     path: "/chat",
     transports: ['websocket']
 });
-socket.on("onnection",async () => {
+socket.on("onnection",() => {
     console.log("jizz");
 });
 

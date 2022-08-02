@@ -1,14 +1,17 @@
 import { useState } from "react";
-const Infobar = ({active}) => {
+import ClickAwayListener from "react-click-away-listener";
+const Infobar = ({ active }) => {
     const [action, setAction] = useState("none");
     return (
-        <div id="infobar" className={`custom-scroll-bar ${active?"":"infobar-hide"}`} 
-        style={{ "height": "calc(100vh - 62px)" }}>
-            <Default action={action} setAction={setAction} />
-            <Search action={action} setAction={setAction} />
-            <Leave action={action} setAction={setAction} />
-            <AddFriend action={action} setAction={setAction} />
-        </div>
+        <ClickAwayListener onClickAway={() => setAction("none")}>
+            <div id="infobar" className={`custom-scroll-bar ${active ? "" : "infobar-hide"}`}
+                style={{ "height": "calc(100vh - 62px)" }}>
+                <Default action={action} setAction={setAction} />
+                <Search action={action} setAction={setAction} />
+                <Leave action={action} setAction={setAction} />
+                <AddFriend action={action} setAction={setAction} />
+            </div>
+        </ClickAwayListener>
     );
 }
 const Default = ({ action, setAction }) => {
@@ -69,7 +72,7 @@ const Search = ({ action, setAction }) => {
         e.preventDefault();
     }
     return (
-        <div hidden={action !== "search"} onclick="action='none'" className="w-full absolute">
+        <div hidden={action !== "search"} className="w-full absolute">
             <div className="p-3">
                 <div className="flex items-center">
                     <button className="mdi mdi-arrow-left btn-actionbar" onClick={() => setAction("none")}></button>
