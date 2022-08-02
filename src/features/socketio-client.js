@@ -1,5 +1,5 @@
 import {io} from "socket.io-client";
-const ws = io("http://localhost:8080",{
+const socket = io("http://localhost:8080",{
     path: "/chat",
     transports: ['websocket']
 });

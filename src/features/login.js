@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector,useDispatch } from "react-redux";
+import {init} from "./reducers/userSlice";
 const Form = () => {
     const [passwd, setPasswd] = useState("");
     const [account, setAccount] = useState("");
     const [err, setErr] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handleSubmit = async (e) => {
         e.preventDefault();
         let user = {name:account,pwd:passwd};
@@ -38,8 +41,9 @@ const Form = () => {
             error = res.con;
             return;
         }
-        console.log(res);
+        console.log(res.data);
         setErr(error);
+        await dispatch(init(res));
         navigate("../",{replace:true});
     }
     return (
