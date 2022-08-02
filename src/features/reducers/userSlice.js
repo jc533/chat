@@ -7,7 +7,7 @@ export const userSlice = createSlice({
         friends:[],
         rooms:[]
     },
-    reducer:{
+    reducers:{
         init:(state,action)=>{
             state = action.payload;
             console.log("jizz");
