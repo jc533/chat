@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
     name:"user",
     initialState:{
+        isLogin:false,
         num:"",
         friends:[],
         rooms:[]
@@ -10,11 +11,11 @@ export const userSlice = createSlice({
     reducers:{
         init:(state,action)=>{
             state = action.payload;
-            console.log("jizz");
             console.log(action.payload);
             return state;
-        }
+        },
+        webSocket:(state)=>state
     }
 });
-export const {init} = userSlice.actions;
+export const {init,webSocket} = userSlice.actions;
 export default userSlice.reducer;
