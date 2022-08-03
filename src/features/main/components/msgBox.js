@@ -1,27 +1,27 @@
-const SystemMsge = ({text}) => {
+import { useSelector } from "react-redux"
+
+const SystemMsge = ({ text }) => {
     return (
         <div className="message-from-system">
             <div className="message-from-system-bubble">
                 {text}
-                {"12/5 週日"}
             </div>
         </div>
     )
 }
-const MsgFromMe = ({time,text}) => {
+const MsgFromMe = ({ time, text }) => {
     return (
         <div className="message-from-me">
             <div className="message-from-me-content">
                 <h4>我 · 19:06{time}</h4>
                 <div className="message-from-me-bubble">
                     {text}
-                    {"Lorem ipsum dolor sit amet."}
                 </div>
             </div>
         </div>
     )
 }
-const MsgFromOther = ({from,time,text}) => {
+const MsgFromOther = ({ from, time, text }) => {
     return (
         <div className="message">
             <div className="message-profile-photo">
@@ -30,11 +30,6 @@ const MsgFromOther = ({from,time,text}) => {
             <div className="message-content">
                 <h4>{from}user · 19:05{time}</h4>
                 <div className="message-bubble">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, omnis itaque
-                    aperiam
-                    hic, veniam voluptas quisquam, non illum accusantium similique doloribus modi
-                    eveniet ea
-                    vitae minima voluptatem. Ut, dolor culpa?
                     {text}
                 </div>
             </div>
@@ -42,11 +37,24 @@ const MsgFromOther = ({from,time,text}) => {
     )
 }
 const MsgBox = () => {
+    const [messages, name] = useSelector(state => [state.user.messages, state.user.name]);
+    // console.log(messages);
     return (
         <>
-            <SystemMsge/>
+            {/* <SystemMsge/>
             <MsgFromMe/>
-            <MsgFromOther/>
+            <MsgFromOther/> */}
+            {messages.map(msg => {
+                switch (msg.name) {
+                    case name:
+                        return <MsgFromMe key={msg.id} text={msg.content} />
+                    case "system":
+                        return <SystemMsge key={msg.id} text={msg.content} />
+                    default:
+                        return <MsgFromOther key={msg.id} text={msg.content} />
+                }
+            }
+            )}
         </>
     )
 }

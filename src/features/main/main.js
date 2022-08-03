@@ -1,10 +1,23 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Navbar, InputBox, MsgBox, Infobar, Header, Sidebar } from "./components";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { startWebSocket } from "../reducers/userSlice";
+
+
 const Main = () => {
+    const [num,name] = useSelector(state=>[state.user.num,state.user.name]);
     const [sideActive,setSidebar] = useState(false);
     const [infoActive,setInfobar] = useState(true);
     const sidebarToggle = ()=>setSidebar(!sideActive);
     const infobarToggle = ()=>setInfobar(!infoActive);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if(num){
+            dispatch(startWebSocket());
+        }
+    }, [num]);
+
     return (
         <main className="h-screen overflow-y-hidden flex">
             <div id="bg-dark" className={`fixed top-0 left-0 w-full h-full bg-dark ${sideActive?"block":"hidden"}`}></div>

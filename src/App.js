@@ -7,7 +7,7 @@ function App() {
             <Routes>
                 <Route path="/login" element={<SingIn/>}/>
                 <Route path="/register" element={<SingUp/>}/>
-                <Route index element={<Main/>}/>
+                <Route path="*" element={<Main/>}/>
             </Routes>
         </BrowserRouter>
     )

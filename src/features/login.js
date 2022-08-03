@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector,useDispatch } from "react-redux";
-import {init,webSocket} from "./reducers/userSlice";
+import {init} from "./reducers/userSlice";
+import {setInit} from "./actions";
 const Form = () => {
     const [passwd, setPasswd] = useState("");
     const [account, setAccount] = useState("");
@@ -41,10 +42,8 @@ const Form = () => {
             error = res.con;
             return;
         }
-        console.log(res.data);
         setErr(error);
-        dispatch(init(res));
-        dispatch(webSocket());
+        dispatch(init({...res,name:user.name}));
         navigate("../",{replace:true});
     }
     return (

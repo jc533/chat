@@ -1,17 +1,36 @@
 // import ws from "./socketio-client";
 import { io } from "socket.io-client";
-import { webSocket } from "./features/reducers/userSlice";
-const wsMiddleware = store => next => action => {
-    if (webSocket.match(action)) {
+import { startWebSocket, receiveSend, wsConnected, sendMessage } from "./features/reducers/userSlice";
+const wsMiddleware = ({ getState, dispatch }) => next => action => {
+    let socket;
+    let user = getState().user;
+    console.log(user)
+    let connected = getState().user.isConnected;
+    if (!connected && !startWebSocket.match(action)) {
         return next(action);
     }
-    const socket = io("http://localhost:8080", {
-        transports: ['websocket']
+    socket = io("http://localhost:8080", {
+        transports: ['websocket'],
+        query: {
+            name: user.name,
+            room: user.num
+        }
     });
     socket.on("connect", () => {
-        console.log("jizz");
-        console.log(socket.id)
+        socket.emit("jizz");
+        dispatch(wsConnected());
     });
+    socket.on("receive_send", (data) => {
+        dispatch(receiveSend(data))
+    })
+    socket.on("disconnect",()=>{
+        console.log("disconnect");
+    })
+    if (sendMessage.match(action)) {
+        console.log(action.payload);
+        socket.emit("jizz");
+    }
     next(action);
+
 }
 export default wsMiddleware;
