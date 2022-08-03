@@ -28,7 +28,7 @@ const wsMiddleware = ({ getState, dispatch }) => next => action => {
     })
     if (sendMessage.match(action)) {
         console.log(action.payload);
-        socket.emit("jizz");
+        socket.emit("send_msg");
     }
     next(action);
 
