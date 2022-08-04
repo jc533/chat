@@ -9,7 +9,6 @@ export const userSlice = createSlice({
         friends:[],
         messages:[],
         rooms:[],
-        wsStart:false
     },
     reducers:{
         init:(state,action)=>{
@@ -21,11 +20,9 @@ export const userSlice = createSlice({
             return state;
         },
         startWebSocket:(state,action)=>{
-            state.wsStart = true;
             return state;
         },
         endWebSocket:(state,action)=>{
-            state.wsStart = false;
             return state;
         },
         wsDisconnected:(state,action)=>{
@@ -37,12 +34,11 @@ export const userSlice = createSlice({
             return state;
         },
         receiveSend:(state,action)=>{
-            console.log(action.payload);
-            state.messages.push(action.payload);
-            return state;
+            if(action.payload){
+                state.messages.push(action.payload[0]);;
+            }
         },
         sendMessage:(state,action)=>{
-            state.wsStart = true
             return state;
         }
     }

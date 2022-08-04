@@ -5,15 +5,16 @@ import { endWebSocket, startWebSocket,wsConnected, wsDisconnected } from "../../
 
 const ChatBox = ({ children }) => {
     const [num, name] = useSelector(state => [state.user.num, state.user.name]);
+    const connected = useSelector(state => state.user.isConnected);
     const wsStatus = useSelector(state=>state.user.wsStart);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(name&&num){
+        if(name&&num&&!connected){
             dispatch(startWebSocket());
         }
-        return ()=>dispatch(endWebSocket());
-    }, [name,num]);
+        // return ()=>dispatch(endWebSocket());
+    }, [name,num,connected]);
     return (
         <React.Fragment>
             {children}

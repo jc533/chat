@@ -1,24 +1,29 @@
 // import ws from "./socketio-client";
 import { io } from "socket.io-client";
-import { startWebSocket, receiveSend, wsConnected, sendMessage, wsDisconnected, endWebSocket } from "./features/reducers/userSlice";
+import { startWebSocket, receiveSend, wsConnected, wsDisconnected, endWebSocket, sendMessage } from "./features/reducers/userSlice";
 const wsMiddleware = (socket)=>({ getState, dispatch }) => next => action => {
     let user = getState().user;
     let connected = getState().user.isConnected;
-    if(startWebSocket.match(action)){
+    if(startWebSocket.match(action)&&!connected){
+        console.log("ws ",connected)
         socket.connect(user.name,user.num);
         socket.on("connect",()=>{
-            console.log(socket);
-            socket.emit("jizz");
             dispatch(wsConnected());
         })
     }
+    if(endWebSocket.match(action)&&connected){
+        socket.disconect();
+        dispatch(wsDisconnected());
+    }
     if(connected){
-        console.log(socket.socket.connected)
-        // socket.emit("jizz");
-        socket.on("jizz",()=>{
-            socket.emit("jizz");
-            console.log("jizz");
+        console.log(socket.socket.connected);
+        socket.on("receive_send",(data)=>{
+            dispatch(receiveSend(data));
         })
+        if(sendMessage.match(action)){
+            console.log("jizz send");
+            socket.emit("send_msg",action.payload);
+        }
     }
     return next(action);
 

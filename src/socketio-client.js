@@ -8,6 +8,11 @@ class ws {
             },
         });
     }
+    disconnect(){
+        if(this.socket){
+            this.socket.disconnect();
+        }   
+    }
     emit(event,data=""){
         this.socket.emit(event,data);
     }
@@ -16,8 +21,4 @@ class ws {
     }
 }
 export default ws;
-
-// const receiveMsg = ws.on(async() => {
-//     await ws.emit("");
-// })
 
