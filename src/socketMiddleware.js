@@ -1,50 +1,26 @@
 // import ws from "./socketio-client";
 import { io } from "socket.io-client";
 import { startWebSocket, receiveSend, wsConnected, sendMessage, wsDisconnected, endWebSocket } from "./features/reducers/userSlice";
-const wsMiddleware = ({ getState, dispatch }) => next => action => {
+const wsMiddleware = (socket)=>({ getState, dispatch }) => next => action => {
     let user = getState().user;
-    // console.log(user)
     let connected = getState().user.isConnected;
-    if (!connected && !startWebSocket.match(action)) {
-        return next(action);
+    if(startWebSocket.match(action)){
+        socket.connect(user.name,user.num);
+        socket.on("connect",()=>{
+            console.log(socket);
+            socket.emit("jizz");
+            dispatch(wsConnected());
+        })
     }
-    const socket = io("http://localhost:8080", {
-        transports: ['websocket'],
-        query: {
-            name: user.name,
-            room: user.num
-        },
-        autoConnect:false
-    });
-    if(!connected&&startWebSocket.match(action)){
-        socket.connect();
-    }
-    socket.on("connect", () => {
-        socket.emit("jizz");
-        dispatch(wsConnected());
-    });
-    socket.on("receive_send", (data) => {
-        dispatch(receiveSend(data))
-    });
-    socket.on("connect_error",(err)=>{
-        console.log(err);
-    })
-    socket.on("disconnect",(reason)=>{
-        console.log(reason);
-        dispatch(wsDisconnected());
-    });
-    socket.on("jizz",()=>{
-        console.log("jizz");
+    if(connected){
+        console.log(socket.socket.connected)
         // socket.emit("jizz");
-    })
-    if (endWebSocket.match(action)) {
-        socket.disconnect();
+        socket.on("jizz",()=>{
+            socket.emit("jizz");
+            console.log("jizz");
+        })
     }
-    if (sendMessage.match(action)) {
-        console.log(action.payload);
-        socket.emit("send_msg");
-    }
-    next(action);
+    return next(action);
 
 }
 export default wsMiddleware;
