@@ -41,17 +41,14 @@ const MsgBox = () => {
     // console.log(messages);
     return (
         <>
-            {/* <SystemMsge/>
-            <MsgFromMe/>
-            <MsgFromOther/> */}
             {messages.map(msg => {
                 switch (msg.name) {
                     case name:
-                        return <MsgFromMe key={msg.id} text={msg.content} />
+                        return <MsgFromMe key={msg._id} text={msg.content} />
                     case "system":
-                        return <SystemMsge key={msg.id} text={msg.content} />
+                        return <SystemMsge key={msg._id} text={msg.content} />
                     default:
-                        return <MsgFromOther key={msg.id} text={msg.content} />
+                        return <MsgFromOther key={msg._id} text={msg.content} />
                 }
             }
             )}

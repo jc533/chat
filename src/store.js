@@ -5,5 +5,5 @@ export default configureStore({
     reducer:{
         user:userReducer
     },
-    middleware:(getDefaultMiddleware) => getDefaultMiddleware().concat(wsMiddleware) 
+    // middleware:(getDefaultMiddleware) => getDefaultMiddleware().concat(wsMiddleware) 
 });

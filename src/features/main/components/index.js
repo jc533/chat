@@ -4,3 +4,4 @@ export {default as MsgBox} from "./msgBox";
 export {default as Infobar} from "./infobar";
 export {default as Header} from "./header";
 export {default as Sidebar} from "./sidebar";
+export {default as ChatBox} from "./chatBox";
