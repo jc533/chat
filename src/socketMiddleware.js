@@ -11,18 +11,15 @@ const wsMiddleware = (socket)=>({ getState, dispatch }) => next => action => {
             dispatch(wsConnected());
         })
     }
-    if(endWebSocket.match(action)&&connected){
-        socket.disconect();
-        dispatch(wsDisconnected());
-    }
     if(connected){
         console.log(socket.socket.connected);
-        socket.on("receive_send",(data)=>{
-            dispatch(receiveSend(data));
-        })
         if(sendMessage.match(action)){
             console.log("jizz send");
             socket.emit("send_msg",action.payload);
+            socket.on("receive_send",(data)=>{
+                console.log("receivedddd")
+                dispatch(receiveSend(data));
+            });
         }
     }
     return next(action);
