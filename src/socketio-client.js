@@ -19,6 +19,9 @@ class ws {
     on(event,action){
         this.socket.on(event,action);
     }
+    once(event,action){
+        this.socket.once(event,action);
+    }
 }
 export default ws;
 

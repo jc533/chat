@@ -16,7 +16,7 @@ const wsMiddleware = (socket)=>({ getState, dispatch }) => next => action => {
         if(sendMessage.match(action)){
             console.log("jizz send");
             socket.emit("send_msg",action.payload);
-            socket.on("receive_send",(data)=>{
+            socket.once("receive_send",(data)=>{
                 console.log("receivedddd")
                 dispatch(receiveSend(data));
             });
