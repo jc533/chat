@@ -14,9 +14,9 @@ export const userSlice = createSlice({
         init:(state,action)=>{
             state.name = action.payload.name;
             state.num = action.payload.num;
-            state.friends = action.payload.data.friends;
+            state.friends = action.payload.data.friends.concat([{ name: "朋友"},{ name: "朋友2"},{ name: "朋友3"}]);
             state.rooms = action.payload.data.rooms;
-            state.messages = action.payload.data.messages;
+            state.messages = action.payload.data.messages.reverse();
             return state;
         },
         startWebSocket:(state,action)=>{
@@ -38,10 +38,22 @@ export const userSlice = createSlice({
                 state.messages.push(action.payload[0]);;
             }
         },
-        sendMessage:(state,action)=>{
-            return state;
-        }
+        receiveAppend:(state,action)=>{
+            state.rooms.push(action.payload);
+        },
+        sendMessage:(state,action)=>{},
+        createGroup:()=>{}
     }
 });
-export const {init,startWebSocket,wsConnected,sendMessage,receiveSend,endWebSocket,wsDisconnected} = userSlice.actions;
+export const {
+    init,
+    startWebSocket,
+    wsConnected,
+    sendMessage,
+    receiveSend,
+    endWebSocket,
+    wsDisconnected,
+    createGroup,
+    receiveAppend
+} = userSlice.actions;
 export default userSlice.reducer;

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const MsgTab = () => {
     const rooms = [
@@ -59,9 +60,35 @@ const Addfriend = ({ action, setAction }) => {
     );
 }
 const CreateGroup = ({ action,setAction }) => {
-    const sendCreate = (e) => { e.preventDefault(); }
     // don't know how to bind checkbox;
-    const [friends, setFriends] = useState([{ name: "朋友", choosed: false }]);
+    const initFriends = useSelector(state=>state.user.friends);
+    const [friends, setFriends] = useState([]);
+    const dipatch = useDispatch();
+    const sendCreate = (e) => {
+        e.preventDefault();
+        const member = friends.filter(obj=>obj.choosed).map(obj=>obj.name);
+        setFriends(friends.map(obj=>{obj.choosed=false;return obj}));
+        console.log(member);
+        setAction("none");
+        // dipatch()
+    }
+    const handleChoose = (name)=>{
+        setFriends(
+            friends.map((obj)=>{
+            if(obj.name===name){
+                obj.choosed = !obj.choosed;
+            }
+            return obj;
+        }));
+    }
+    useEffect(() => {
+        let tmp = initFriends.map((obj)=>{
+            let ob = {...obj}
+            ob.choosed=false;
+            return ob;
+        });
+        setFriends(tmp);
+    }, [initFriends]);
     return (
         <>
             <div className="py-3 absolute w-full">
@@ -76,7 +103,7 @@ const CreateGroup = ({ action,setAction }) => {
                                     <span className="mdi mdi-account text-xl text-gray-600 mr-4"></span>
                                     <p className="text-gray-900">{obj.name}</p>
                                 </div>
-                                <input type="checkbox" name="" id="" />
+                                <input checked={obj.choosed} onChange={()=>handleChoose(obj.name)} type="checkbox" name="" id="" />
                                 <span className="custom-checkbox-icon"></span>
                             </label>))}
 
