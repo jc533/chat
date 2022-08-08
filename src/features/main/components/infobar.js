@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
+import { useDispatch, useSelector } from "react-redux";
 const Infobar = ({ active }) => {
     const [action, setAction] = useState("none");
     return (
@@ -117,11 +118,31 @@ const Leave = ({ action, setAction }) => {
     );
 }
 const AddFriend = ({ action, setAction }) => {
+    const initFriends = useSelector(state=>state.user.friends);
+    const [friends, setFriends] = useState([]);
+    const dipatch = useDispatch();
+    const handleChoose = (name)=>{
+        setFriends(
+            friends.map((obj)=>{
+            if(obj.name===name){
+                obj.choosed = !obj.choosed;
+            }
+            return obj;
+        }));
+    }
+    useEffect(() => {
+        let tmp = initFriends.map((obj)=>{
+            let ob = {...obj}
+            ob.choosed=false;
+            return ob;
+        });
+        setFriends(tmp);
+    }, [initFriends]);
     const addFriend = (e) => {
         e.preventDefault();
     }
     return (
-        <div hidden={action !== "addFriend"} onClick={() => setAction("none")} className="w-full absolute">
+        <div hidden={action !== "addFriend"} className="w-full absolute">
             <div className="p-3">
                 <div className="flex items-center">
                     <button className="mdi mdi-arrow-left btn-actionbar" onClick={() => setAction("none")}></button>
@@ -129,14 +150,16 @@ const AddFriend = ({ action, setAction }) => {
                 </div>
 
                 <form className="my-2" onSubmit={addFriend}>
-                    <label className="list-item custom-checkbox">
+                    {friends.map((obj,id)=>(
+                    <label key={id} className="list-item custom-checkbox">
                         <div className="flex items-center">
                             <span className="mdi mdi-account text-xl text-gray-600 mr-4"></span>
-                            <p className="text-gray-900">朋友</p>
+                            <p className="text-gray-900">{obj.name}</p>
                         </div>
-                        <input type="checkbox" name="" id="" />
+                        <input checked={obj.choosed} onChange={()=>handleChoose(obj.name)} type="checkbox" name="" id="" />
                         <span className="custom-checkbox-icon"></span>
                     </label>
+                    ))}
 
                     <div className="mt-4 grid grid-cols-2 gap-4">
                         <button className="btn btn-secondary" type="reset"
