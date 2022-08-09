@@ -38,7 +38,7 @@ const MsgFromOther = ({ from, time, text }) => {
         </div>
     )
 }
-const MsgBox = () => {
+const MsgBox = ({shouldScroll,setBottom}) => {
     const [messages, name] = useSelector(state => [state.user.messages, state.user.name]);
     const dispatch = useDispatch();
     const msgRef = useRef(null);
@@ -49,8 +49,11 @@ const MsgBox = () => {
         }
     }
     useEffect(() => {
+        if(shouldScroll){
             msgRef.current.scrollTo({top:msgRef.current.scrollHeight});
-    }, [name]);
+            setBottom(false);
+        }
+    }, [name,messages]);
     // console.log(messages);
     return (
         <div ref={msgRef} onScroll={handleScroll} id="content" className="overflow-y-scroll p-4 custom-scroll-bar"

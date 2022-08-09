@@ -8,6 +8,7 @@ import { endWebSocket, startWebSocket } from "../reducers/userSlice";
 const Main = () => {
     const [sideActive, setSidebar] = useState(false);
     const [infoActive, setInfobar] = useState(true);
+    const [scrollBottom, setBottom] = useState(true);
     const sidebarToggle = () => setSidebar(!sideActive);
     const infobarToggle = () => setInfobar(!infoActive);
 
@@ -20,9 +21,9 @@ const Main = () => {
                 <div className="flex overflow-x-hidden">
                     <ChatBox>
                         <div id="chat" className={`w-3/4 ${infoActive ? "" : "infobar-hide-chat"}`}>
-                                <MsgBox />
+                            <MsgBox shouldScroll={scrollBottom} setBottom={setBottom} />
                             <div className="w-full p-3 bg-white border-t border-gray-300">
-                                <InputBox />
+                                <InputBox setBottom={setBottom}/>
                             </div>
                         </div>
                     </ChatBox>

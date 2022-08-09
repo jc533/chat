@@ -2,13 +2,14 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { sendMessage } from "../../reducers/userSlice";
 
-const InputBox = () => {
+const InputBox = ({setBottom}) => {
     const [text, setText] = useState("");
     const dispatch = useDispatch();
     const sendMsg = (e) => {
         e.preventDefault();
         dispatch(sendMessage(text));
         setText("");
+        setBottom(true);
     }
     return (
         <form className="flex" onSubmit={sendMsg}>
