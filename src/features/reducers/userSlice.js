@@ -39,7 +39,8 @@ export const userSlice = createSlice({
             }
         },
         reeceiveLoad:(state,action)=>{
-            if(action.payload!==[]){
+            if(action.payload.length){
+                console.log(action.payload);
                 state.messages.reverse().push(...action.payload);
             }
         },
