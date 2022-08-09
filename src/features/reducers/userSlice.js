@@ -34,11 +34,12 @@ export const userSlice = createSlice({
             return state;
         },
         receiveSend:(state,action)=>{
-            let msgs = state.messages.slice();
+            let msgs = state.messages.slice().reverse();
             if(action.payload){
-                msgs.reverse().push(...action.payload);;
+                msgs.push(...action.payload);;
+                msgs.reverse();
             }
-            return msgs.reverse();
+            return {...state,messages:msgs};
         },
         reeceiveLoad:(state,action)=>{
             if(action.payload.length){
