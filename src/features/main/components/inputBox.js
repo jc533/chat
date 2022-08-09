@@ -8,6 +8,7 @@ const InputBox = () => {
     const sendMsg = (e) => {
         e.preventDefault();
         dispatch(sendMessage(text));
+        setText("");
     }
     return (
         <form className="flex" onSubmit={sendMsg}>

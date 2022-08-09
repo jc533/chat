@@ -1,4 +1,6 @@
-import { useSelector } from "react-redux"
+import { useRef, useState,useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { loadMsgs } from "../../reducers/userSlice"
 
 const SystemMsge = ({ text }) => {
     return (
@@ -38,10 +40,22 @@ const MsgFromOther = ({ from, time, text }) => {
 }
 const MsgBox = () => {
     const [messages, name] = useSelector(state => [state.user.messages, state.user.name]);
+    const dispatch = useDispatch();
+    const msgRef = useRef(null);
+    const handleScroll = () => {
+        const {scrollTop} = msgRef.current;
+        if(scrollTop===0){
+            dispatch(loadMsgs(messages.length));
+        }
+    }
+    useEffect(() => {
+            msgRef.current.scrollTo({top:msgRef.current.scrollHeight});
+    }, [name]);
     // console.log(messages);
     return (
-        <>
-            {messages.map(msg => {
+        <div ref={msgRef} onScroll={handleScroll} id="content" className="overflow-y-scroll p-4 custom-scroll-bar"
+        style={{ "height": "calc(100vh - 150px)" }}>
+            {messages.slice().reverse().map(msg => {
                 switch (msg.name) {
                     case name:
                         return <MsgFromMe key={msg._id} text={msg.content} />
@@ -52,7 +66,7 @@ const MsgBox = () => {
                 }
             }
             )}
-        </>
+        </div>
     )
 }
 export default MsgBox;
