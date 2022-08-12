@@ -1,9 +1,10 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import DropdownMenu from "./menu";
 
 const MsgTab = () => {
-    const rooms  = useSelector(state=>state.user.rooms);
+    const rooms = useSelector(state => state.user.rooms);
     return (
         <div id="add_rooms">
             {rooms.map((obj, id) => (
@@ -22,11 +23,11 @@ const FriendTab = () => {
     const [action, setAction] = useState("none");
     switch (action) {
         case "createGroup":
-            return (<CreateGroup action={action} setAction={setAction}/>);
+            return (<CreateGroup action={action} setAction={setAction} />);
         case "addFriend":
-            return (<Addfriend action={action} setAction={setAction}/>);
+            return (<Addfriend action={action} setAction={setAction} />);
         default:
-            return (<Default action={action} setAction={setAction}/>);
+            return (<Default action={action} setAction={setAction} />);
     }
 
 }
@@ -56,32 +57,32 @@ const Addfriend = ({ action, setAction }) => {
         </div>
     );
 }
-const CreateGroup = ({ action,setAction }) => {
+const CreateGroup = ({ action, setAction }) => {
     // don't know how to bind checkbox;
-    const initFriends = useSelector(state=>state.user.friends);
+    const initFriends = useSelector(state => state.user.friends);
     const [friends, setFriends] = useState([]);
     const dipatch = useDispatch();
     const sendCreate = (e) => {
         e.preventDefault();
-        const member = friends.filter(obj=>obj.choosed).map(obj=>obj.name);
-        setFriends(friends.map(obj=>{obj.choosed=false;return obj}));
+        const member = friends.filter(obj => obj.choosed).map(obj => obj.name);
+        setFriends(friends.map(obj => { obj.choosed = false; return obj }));
         console.log(member);
         setAction("none");
         // dipatch()
     }
-    const handleChoose = (name)=>{
+    const handleChoose = (name) => {
         setFriends(
-            friends.map((obj)=>{
-            if(obj.name===name){
-                obj.choosed = !obj.choosed;
-            }
-            return obj;
-        }));
+            friends.map((obj) => {
+                if (obj.name === name) {
+                    obj.choosed = !obj.choosed;
+                }
+                return obj;
+            }));
     }
     useEffect(() => {
-        let tmp = initFriends.map((obj)=>{
-            let ob = {...obj}
-            ob.choosed=false;
+        let tmp = initFriends.map((obj) => {
+            let ob = { ...obj }
+            ob.choosed = false;
             return ob;
         });
         setFriends(tmp);
@@ -100,13 +101,13 @@ const CreateGroup = ({ action,setAction }) => {
                                     <span className="mdi mdi-account text-xl text-gray-600 mr-4"></span>
                                     <p className="text-gray-900">{obj.name}</p>
                                 </div>
-                                <input checked={obj.choosed} onChange={()=>handleChoose(obj.name)} type="checkbox" name="" id="" />
+                                <input checked={obj.choosed} onChange={() => handleChoose(obj.name)} type="checkbox" name="" id="" />
                                 <span className="custom-checkbox-icon"></span>
                             </label>))}
 
                         <div className="mt-4 grid grid-cols-2 gap-4">
                             <button className="btn btn-secondary" type="reset"
-                                onClick={()=>setAction("none")}>取消</button>
+                                onClick={() => setAction("none")}>取消</button>
                             <button type="submit" className="btn btn-primary">建立</button>
                         </div>
                     </form>
@@ -115,41 +116,50 @@ const CreateGroup = ({ action,setAction }) => {
         </>
     )
 }
-const Default = ({action,setAction}) => {
+const Default = ({ action, setAction }) => {
     return (
         <>
             <div className="p-3 grid grid-cols-2 gap-4">
-                <button className="w-full btn btn-primary" onClick={()=>setAction("addFriend")}>
+                <button className="w-full btn btn-primary" onClick={() => setAction("addFriend")}>
                     <span className="mdi mdi-account-plus text-2xl block"></span>
                     新增朋友
                 </button>
-                <button className="w-full btn btn-primary" onClick={()=>setAction("createGroup")}>
+                <button className="w-full btn btn-primary" onClick={() => setAction("createGroup")}>
                     <span className="mdi mdi-account-multiple-plus text-2xl block"></span>
                     建立群組
                 </button>
             </div >
-
-            <div className="aside-item flex justify-between">
-                <div className="flex items-center">
-                    <span className="mdi mdi-account text-gray-700 text-2xl mr-4"></span>
-                    <h4 className="text-gray-900 inline-block">朋友</h4>
-                </div>
-                <div className="relative">
-                    <button className="btn-icon mdi mdi-dots-vertical"
-                        onclick="dropdownOpen=!dropdownOpen"></button>
-                    <div className="dropdown" x-show="dropdownOpen" onclick="dropdownOpen = false">
-                        <a href="settings.html" className="dropdown-item" target="_blank">
-                            <span className="mdi mdi-message-processing"></span>
-                            聊天
-                        </a>
-                        <a href="" className="dropdown-item">
-                            <span className="mdi mdi-delete"></span>
-                            刪除
-                        </a>
-                    </div>
-                </div >
-            </div >
+            <FriendList />
         </>
     );
+}
+const FriendList = () => {
+    const friends = useSelector(state => state.user.friends);
+    return (<>
+        {friends.map((obj, id) => (
+            <div key={id} className="aside-item flex justify-between">
+                <div className="flex items-center">
+                    <span className="mdi mdi-account text-gray-700 text-2xl mr-4"></span>
+                    <h4 className="text-gray-900 inline-block">{obj.name}</h4>
+                </div>
+                <DropdownMenu
+                    btnClass="btn-icon mdi mdi-dots-vertical"
+                    options={
+                        <>
+                            <a href="" className="dropdown-item" target="_blank">
+                                <span className="mdi mdi-message-processing"></span>
+                                聊天
+                            </a>
+                            <a href="" className="dropdown-item">
+                                <span className="mdi mdi-delete"></span>
+                                刪除
+                            </a>
+                        </>
+                    }
+                />
+            </div>
+        ))}
+    </>
+    )
 }
 export { MsgTab, FriendTab };

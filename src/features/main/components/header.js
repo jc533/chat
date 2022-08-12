@@ -1,4 +1,5 @@
 import { useState } from "react"
+import DropdownMenu from "./menu"
 const Header = ({sidebarToggle }) => {
     return (
         <div className="sticky bg-white md:bg-gray-200 p-4">
@@ -14,16 +15,16 @@ const Header = ({sidebarToggle }) => {
     )
 }
 const AccountMenu = () => {
-    const [isOpen,setOpen] = useState(false);
-    const toggle = ()=>setOpen(!isOpen);
     return (
-        <div className="relative">
-            <button className="btn-actionbar flex items-center" onClick={toggle}>
+        <DropdownMenu
+            btnClass="btn-actionbar flex items-center"
+            btn={<>
                 <span className="mdi mdi-account-circle text-blue-500 text-2xl"></span>
                 <span className="mdi mdi-menu-down text-gray-600"></span>
-            </button>
-
-            <div className="dropdown" hidden={!isOpen} onClick={toggle}>
+                </>
+            }
+            options={
+                <>
                 <a href="/settings" className="dropdown-item" target="_blank">
                     <span className="mdi mdi-settings"></span>
                     設定
@@ -32,8 +33,8 @@ const AccountMenu = () => {
                     <span className="mdi mdi-logout"></span>
                     登出
                 </a>
-            </div>
-        </div>
+                </>
+            }/>
     )
 }
 export default Header;
