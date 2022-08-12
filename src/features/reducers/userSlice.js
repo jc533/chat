@@ -15,7 +15,11 @@ export const userSlice = createSlice({
             state.name = action.payload.name;
             state.num = action.payload.num;
             state.friends = action.payload.data.friends.concat([{ name: "朋友"},{ name: "朋友2"},{ name: "朋友3"}]);
-            state.rooms = action.payload.data.rooms;
+            state.rooms = action.payload.data.rooms.concat([
+                { name: "群組", type: "group-", description: "Lorem, ipsum dolor." },
+                { name: "群組", type: "group-", description: "Lorem, ipsum dolor." },
+                { name: "個人", type: "", description: "Lorem, ipsum dolor." }
+            ]);
             state.messages = action.payload.data.messages;
             return state;
         },
