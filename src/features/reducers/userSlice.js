@@ -9,6 +9,7 @@ export const userSlice = createSlice({
         friends:[],
         messages:[],
         rooms:[],
+        current:{}
     },
     reducers:{
         init:(state,action)=>{
@@ -21,6 +22,7 @@ export const userSlice = createSlice({
                 { name: "個人", type: "", description: "Lorem, ipsum dolor." }
             ]);
             state.messages = action.payload.data.messages;
+            state.current = action.payload.data.rooms.filter(e=>e.num===action.payload.num)[0];
             return state;
         },
         startWebSocket:(state,action)=>{
