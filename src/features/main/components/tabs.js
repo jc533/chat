@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { addFriend } from "../../reducers/userSlice";
 import DropdownMenu from "./menu";
 
 const MsgTab = () => {
@@ -32,8 +33,14 @@ const FriendTab = () => {
 
 }
 const Addfriend = ({ action, setAction }) => {
-    const sendAdd = (e) => { e.preventDefault(); };
+    const dispatch = useDispatch();
     const [name, setName] = useState("");
+    const sendAdd = (e) => { 
+        e.preventDefault();
+        dispatch(addFriend(name));
+        setName("");
+        setAction("none");
+    };
     return (
         <div hidden={action !== "addFriend"} className="py-3 absolute w-full">
             <div className="bg-white rounded-lg p-3 text-center">
