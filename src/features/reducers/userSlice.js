@@ -5,6 +5,7 @@ export const userSlice = createSlice({
     initialState: {
         name: "",
         isConnected: false,
+        wsStatus:"disconnected",
         num: null,
         friends: [],
         messages: [],
@@ -26,7 +27,7 @@ export const userSlice = createSlice({
             return state;
         },
         startWebSocket: (state, action) => {
-            return state;
+            state.wsStatus="connecting";
         },
         endWebSocket: (state, action) => {
             return state;
@@ -37,7 +38,7 @@ export const userSlice = createSlice({
         },
         wsConnected: (state, action) => {
             state.isConnected = true;
-            return state;
+            state.wsStatus = "connectted";
         },
         receiveSend: (state, action) => {
             let msgs = state.messages.slice().reverse();

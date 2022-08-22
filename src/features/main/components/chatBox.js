@@ -1,20 +1,29 @@
 import React, { useEffect } from "react";
 import { io } from "socket.io-client";
 import { useSelector, useDispatch } from "react-redux";
-import { endWebSocket, startWebSocket,wsConnected, wsDisconnected } from "../../reducers/userSlice";
+import { endWebSocket, startWebSocket, wsConnected, wsDisconnected } from "../../reducers/userSlice";
 
 const ChatBox = ({ children }) => {
-    const [num, name] = useSelector(state => [state.user.num, state.user.name]);
-    const connected = useSelector(state => state.user.isConnected);
-    const wsStatus = useSelector(state=>state.user.wsStart);
+    const user = useSelector(state => {
+        return {
+            num: state.user.num,
+            name: state.user.name,
+            connected: state.user.isConnected,
+            wsStatus: state.user.wsStatus
+        }
+    });
     const dispatch = useDispatch();
-
+    console.count("hi");
+    //async logic !!
     useEffect(() => {
-        if(name&&num&&!connected){
-            dispatch(startWebSocket());
+        if (user.wsStatus === "disconnected") {
+            if (user.name && user.num && !user.connected) {
+                console.log(user.wsStatus);
+                dispatch(startWebSocket());
+            }
         }
         // return ()=>dispatch(endWebSocket());
-    }, [name,num,connected]);
+    }, [user, dispatch]);
     return (
         <React.Fragment>
             {children}

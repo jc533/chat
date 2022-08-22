@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addFriend } from "../../reducers/userSlice";
+import { addFriend, createGroup } from "../../reducers/userSlice";
 import DropdownMenu from "./menu";
 
 const MsgTab = () => {
@@ -65,7 +65,6 @@ const Addfriend = ({ action, setAction }) => {
     );
 }
 const CreateGroup = ({ action, setAction }) => {
-    // don't know how to bind checkbox;
     const initFriends = useSelector(state => state.user.friends);
     const [friends, setFriends] = useState([]);
     const dipatch = useDispatch();
@@ -75,7 +74,7 @@ const CreateGroup = ({ action, setAction }) => {
         setFriends(friends.map(obj => { obj.choosed = false; return obj }));
         console.log(member);
         setAction("none");
-        // dipatch()
+        dipatch(createGroup(member));
     }
     const handleChoose = (name) => {
         setFriends(
