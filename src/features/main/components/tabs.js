@@ -9,7 +9,7 @@ const MsgTab = () => {
     return (
         <div id="add_rooms">
             {rooms.map((obj, id) => (
-                <Link key={id} to="/" className="aside-item">
+                <Link key={id} to={"/"+(obj.num&&obj.num)} className="aside-item">
                     <span className={`mdi mdi-account-${obj.type}outline text-gray-700 text-4xl mr-4`}></span>
                     <div className="inline-block">
                         <h4 className="text-gray-900 text-lg">{obj.name}</h4>

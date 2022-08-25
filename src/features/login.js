@@ -32,7 +32,6 @@ const Form = () => {
                 "Content-Type":"Application/json"
             }
         });
-        // console.log(res.status);
         res = await res.json();
         if(res.code === 404){
             alert(res.con);
@@ -44,7 +43,7 @@ const Form = () => {
         }
         setErr(error);
         dispatch(init({...res,name:user.name}));
-        navigate("../",{replace:true});
+        navigate(`../${res.num}`,{replace:true});
     }
     return (
         <form action="/login" method="post" id="login" onSubmit={handleSubmit}>

@@ -28,6 +28,10 @@ const wsMiddleware = (socket) => ({ getState, dispatch }) => next => action => {
             dispatch(receiveFriend(data));
         });
     }
+    if(status==="reconnecting"){
+        socket.disconnect();
+        socket.connect(user.name, user.num);
+    }
     if (connected) {
         console.log(socket.socket.connected);
         if (sendMessage.match(action)) {

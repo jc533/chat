@@ -47,7 +47,6 @@ const Form = () => {
             error = res.con;
             return;
         }
-        // console.log(res);
         setErr(error);
         navigate("../login", { replace: true });
     }

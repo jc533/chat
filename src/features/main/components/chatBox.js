@@ -13,8 +13,7 @@ const ChatBox = ({ children }) => {
         }
     });
     const dispatch = useDispatch();
-    console.count("hi");
-    //async logic !!
+    //bug dispatch twice!!!!
     useEffect(() => {
         if (user.wsStatus === "disconnected") {
             if (user.name && user.num && !user.connected) {
@@ -22,7 +21,6 @@ const ChatBox = ({ children }) => {
                 dispatch(startWebSocket());
             }
         }
-        // return ()=>dispatch(endWebSocket());
     }, [user, dispatch]);
     return (
         <React.Fragment>

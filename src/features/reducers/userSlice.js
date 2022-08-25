@@ -17,11 +17,11 @@ export const userSlice = createSlice({
             state.name = action.payload.name;
             state.num = action.payload.num;
             state.friends = action.payload.data.friends.map((text) => { return { name: text } });
-            state.rooms = action.payload.data.rooms.concat([
-                { name: "群組", type: "group-", description: "Lorem, ipsum dolor." },
-                { name: "群組", type: "group-", description: "Lorem, ipsum dolor." },
-                { name: "個人", type: "", description: "Lorem, ipsum dolor." }
-            ]);
+            state.rooms = action.payload.data.rooms//.concat([
+            //     { name: "群組", type: "group-", description: "Lorem, ipsum dolor." },
+            //     { name: "群組", type: "group-", description: "Lorem, ipsum dolor." },
+            //     { name: "個人", type: "", description: "Lorem, ipsum dolor." }
+            // ]);
             state.messages = action.payload.data.messages;
             state.current = action.payload.data.rooms.filter(e => e.num === action.payload.num)[0];
             return state;
@@ -65,7 +65,15 @@ export const userSlice = createSlice({
                 console.log(action.payload);
             }
         },
-        sendMessage: (state, action) => { },
+        switchRoom:(state,action)=>{
+            state.num = action.payload;
+            state.current = state.rooms.filter(e => e.num === action.payload)[0];
+            state.wsStatus="disconnected";
+            state.messages = [];
+            
+        },
+        loadRoom:()=>{},
+        sendMessage: () => {},
         createGroup: () => { },
         loadMsgs: () => { },
         addFriend: () => { }
@@ -84,6 +92,7 @@ export const {
     loadMsgs,
     receiveLoad,
     addFriend,
-    receiveFriend
+    receiveFriend,
+    switchRoom
 } = userSlice.actions;
 export default userSlice.reducer;

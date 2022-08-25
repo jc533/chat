@@ -22,6 +22,9 @@ class ws {
     once(event,action){
         this.socket.once(event,action);
     }
+    removeAllListeners(){
+        this.socket.removeAllListeners();
+    }
 }
 export default ws;
 

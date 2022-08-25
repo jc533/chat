@@ -54,7 +54,6 @@ const MsgBox = ({shouldScroll,setBottom}) => {
             setBottom(false);
         }
     }, [name,messages]);
-    // console.log(messages);
     return (
         <div ref={msgRef} onScroll={handleScroll} id="content" className="overflow-y-scroll p-4 custom-scroll-bar"
         style={{ "height": "calc(100vh - 150px)" }}>
